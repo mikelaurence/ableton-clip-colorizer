@@ -28,7 +28,7 @@ ruby colorizer.rb
 
 ## Configuration
 
-Colorizer automatically retrieves clip information from Live and updates your clip colors accordingly. Since Live fires events when you make / rename clips, it will continue to colorize in real-time if you leave it running. A cool side-benefit!
+Colorizer automatically retrieves clip information from Live and updates your clip colors accordingly. Since Live fires events when you make / rename clips, it will continue to colorize in real-time if you leave it running. Note: stopping and then starting your set also triggers a resend of all clip information, which can cause hiccups. So avoid that if you want to leave colorizer running (you can always just re-run colorizer every now and then to colorize clips).
 
 The only real configuration is in colorizer.yml, where you specify a list of colors by name ('colors' section) and nested clip names to match against ('names').
 
