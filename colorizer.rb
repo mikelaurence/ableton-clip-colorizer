@@ -7,6 +7,7 @@ def colorize_clip(track, clip, name)
   name_with_track = "#{@tracks[track]}: #{name}"
   color = color_for_name(name_with_track)
   color_int = rgb_to_int(color)
+  set_clip track, clip, name, color_int
   p "Clip #{track}:#{clip} - #{name_with_track} => #{color} / #{color}"
 end
 
@@ -19,7 +20,8 @@ end
 def color_for_matcher(name, matcher = nil)
   matcher ||= @colors['names']
   matcher.each_pair do |matcher, color_or_nested_matcher|
-    if name =~ /#{matcher}/
+    regex = /#{Regexp.quote(matcher.to_s)}/
+    if name =~ regex
       if color_or_nested_matcher.is_a?(Hash)
         return color_for_matcher(name, color_or_nested_matcher)
       else
@@ -85,7 +87,9 @@ def get_clips
   @client.send(OSC::Message.new("/live/name/clip"))
 end
 
-#@client.send(OSC::Message.new("/live/name/clip", 0, 0, 'hello there', rgb_to_int([0, 210, 255])))
+def set_clip(track, clip, name, color)
+  @client.send(OSC::Message.new("/live/name/clip", track, clip, name, color))
+end
 
 load_colors
 get_track_count
