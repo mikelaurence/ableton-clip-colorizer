@@ -28,10 +28,16 @@ The only real configuration is in colorizer.yml, where you specify a list of col
 For each clip, colorizer attempts to match the track name and clip name down the list of matchers. Example:
 
 ```yaml
-Synths:
-  default: blue_1
-  double: blue_2
-  triple: blue_3
+names:
+  Synths:
+    default: blue_1
+    double: blue_2
+    triple: blue_3
+
+colors:
+  blue_1: 8bc5ff
+  blue_2: 10a4ee
+  blue_3: 0303ff
 ```
 
 Any clip in a track named "Synths" will match this group, as will a clip anywhere named "Synths". Once "Synths" has been matched, colorizer continues down the nested list, trying to find the first next successful match. If your clip in the "Synths" track is called "Normal", it won't match anything further, so it will use the "default" color. If your clip in the "Synths" track is called "triple", it will match the triple setting and return blue_3.
