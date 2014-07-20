@@ -4,7 +4,7 @@ require 'osc-ruby'
 require 'osc-ruby/em_server'
 
 def colorize_clip(track, clip, name)
-  color = color_for_name(name)
+  color = color_for_name("#{@tracks[track]}: #{name}")
   color_int = rgb_to_int(color)
   p "Clip #{track}:#{clip} - #{name} => #{color}"
 end
