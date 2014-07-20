@@ -15,6 +15,7 @@ colors:
   brown_1: '965735'
   brown_2: ffa374
 names:
+  '#': white
   Fill:
     1: yellow
     2: orange
@@ -22,16 +23,16 @@ names:
     8: purple_2
   Perc:
     default: brown_1
-    '+': brown_2
+    B: brown_2
   Hits:
     default: purple_1
-    '+': purple_2
-  Synths:
+    B: purple_2
+  Synth:
     default: blue_1
-    '++': blue_3
-    '+': blue_2
+    B: blue_2
+    C: blue_3
   Layer:
     default: dark_gray
-  Pads:
+  Pad:
     default: green_1
-    '+': green_2
+    B: green_2

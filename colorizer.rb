@@ -17,20 +17,20 @@ def color_for_name(name)
   color || [0, 0, 0]
 end
 
-def color_for_matcher(name, matcher = nil)
+def color_for_matcher(name, matcher = nil, default = nil)
   matcher ||= @colors['names']
   matcher.each_pair do |matcher, color_or_nested_matcher|
     regex = /#{Regexp.quote(matcher.to_s)}/
     if name =~ regex
       if color_or_nested_matcher.is_a?(Hash)
-        return color_for_matcher(name, color_or_nested_matcher)
+        return color_for_matcher(name, color_or_nested_matcher, color_or_nested_matcher['default'])
       else
         return color_or_nested_matcher
       end
     end
   end
 
-  nil
+  default
 end
 
 def hex_to_rgb(hex)

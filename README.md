@@ -4,7 +4,12 @@ This tool colorizes your Ableton clips based on their name and a match/color con
 
 ## Installation
 
-You must install [LiveOSC]('http://livecontrol.q3f.org/ableton-liveapi/liveosc/') and the following ruby gems (and ruby if you don't have it):
+Requirements:
+
+[LiveOSC]('http://livecontrol.q3f.org/ableton-liveapi/liveosc/')
+Note: be sure to select LiveOSC as a control surface in Live's preferences
+
+Ruby and the following ruby gems:
 
 ```bash
 # Command-line
@@ -13,7 +18,9 @@ gem install osc-ruby
 gem install eventmachine
 ```
 
-Then run colorizer.rb (after configuring to your specification):
+## Usage
+
+Run colorizer.rb after configuring colorizer.yml to your needs:
 
 ```bash
 ruby colorizer.rb
@@ -33,6 +40,8 @@ names:
     default: blue_1
     double: blue_2
     triple: blue_3
+  Basses:
+    default: gray_1
 
 colors:
   blue_1: 8bc5ff
@@ -43,3 +52,8 @@ colors:
 Any clip in a track named "Synths" will match this group, as will a clip anywhere named "Synths". Once "Synths" has been matched, colorizer continues down the nested list, trying to find the first next successful match. If your clip in the "Synths" track is called "Normal", it won't match anything further, so it will use the "default" color. If your clip in the "Synths" track is called "triple", it will match the triple setting and return blue_3.
 
 The named colors (like blue_3) are referenced in the 'colors' section. These are sent to Live as-is, which finds the closest allowed clip color and uses that.
+
+## Notes
+
+- Tracks in folded groups are not be processed (a limitation of LiveOSC? Not sure.)
+- Matches are done in order, so for example if a clip matches both "Synths" and "Basses" in the above configuration, it will dig into the "Synths" section for matches only.
