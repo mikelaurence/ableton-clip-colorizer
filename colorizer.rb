@@ -4,15 +4,31 @@ require 'osc-ruby'
 require 'osc-ruby/em_server'
 
 def colorize_clip(track, clip, name)
-  color = color_for_name("#{@tracks[track]}: #{name}")
+  name_with_track = "#{@tracks[track]}: #{name}"
+  color = color_for_name(name_with_track)
   color_int = rgb_to_int(color)
-  p "Clip #{track}:#{clip} - #{name} => #{color}"
+  p "Clip #{track}:#{clip} - #{name_with_track} => #{color} / #{color}"
 end
 
 def color_for_name(name)
-  color = @colors['default']
+  color = color_for_matcher(name) || @colors['default']
+  color = @colors['colors'][color] if color.is_a?(String)
+  color || [0, 0, 0]
+end
 
-  (color.is_a?(String) ? @colors['colors'][color] : color) || [0, 0, 0]
+def color_for_matcher(name, matcher = nil)
+  matcher ||= @colors['names']
+  matcher.each_pair do |matcher, color_or_nested_matcher|
+    if name =~ /#{matcher}/
+      if color_or_nested_matcher.is_a?(Hash)
+        return color_for_matcher(name, color_or_nested_matcher)
+      else
+        return color_or_nested_matcher
+      end
+    end
+  end
+
+  nil
 end
 
 def hex_to_rgb(hex)
