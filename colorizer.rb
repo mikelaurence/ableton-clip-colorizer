@@ -10,7 +10,13 @@ def colorize_clip(track, clip, name)
 end
 
 def color_for_name(name)
-  @colors['default'] || [0, 0, 0]
+  color = @colors['default']
+
+  (color.is_a?(String) ? @colors['colors'][color] : color) || [0, 0, 0]
+end
+
+def hex_to_rgb(hex)
+  hex.scan(/../).map {|color| color.to_i(16)}
 end
 
 def rgb_to_int(rgb)
@@ -19,6 +25,21 @@ end
 
 @server = OSC::EMServer.new(9001)
 @client = OSC::Client.new('localhost', 9000)
+
+@server.add_method '/live/tracks' do |message|
+  @track_count = message.to_a[0]
+  get_tracks
+end
+
+@server.add_method '/live/name/track' do |message|
+  track_info = message.to_a
+  @tracks ||= {}
+  @tracks[track_info[0]] = track_info[1]
+
+  if @tracks.size == @track_count
+    get_clips
+  end
+end
 
 @server.add_method '/live/name/clip' do |message|
   clip_info = message.to_a
@@ -29,11 +50,31 @@ Thread.new do
   @server.run
 end
 
-@colors = YAML.load_file('colorizer.yml')
-@client.send(OSC::Message.new("/live/name/clip"))
+def load_colors
+  @colors = YAML.load_file('colorizer.yml')
+  @colors['colors'].each_pair do |key, val|
+    @colors['colors'][key] = hex_to_rgb(val) if val.is_a?(String)
+  end
+end
 
-gets
+def get_track_count
+  @client.send(OSC::Message.new("/live/tracks"))
+end
 
+def get_tracks
+  @client.send(OSC::Message.new("/live/name/track"))
+end
+
+def get_clips
+  @client.send(OSC::Message.new("/live/name/clip"))
+end
+
+#@client.send(OSC::Message.new("/live/name/clip", 0, 0, 'hello there', rgb_to_int([0, 210, 255])))
+
+load_colors
+get_track_count
+
+gets # Close the server with 'enter' key
 
 
 

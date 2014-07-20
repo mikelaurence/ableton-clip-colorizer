@@ -1,1 +1,37 @@
-default: [255, 255, 255]
+default: white
+colors:
+  white: ffffff
+  yellow: ffee9f
+  orange: f66c03
+  red: ff0505
+  dark_gray: 3c3c3c
+  green_1: 89b47d
+  green_2: 87ff67
+  blue_1: 8bc5ff
+  blue_2: 10a4ee
+  blue_3: 0303ff
+  purple_1: d86ce4
+  purple_2: ff39d4
+  brown_1: '965735'
+  brown_2: ffa374
+names:
+  Fill:
+    1: yellow
+    2: orange
+    4: red
+    8: purple_2
+  Perc:
+    default: brown_1
+    '+': brown_2
+  Hits:
+    default: purple_1
+    '+': purple_2
+  Synths:
+    default: blue_1
+    '++': blue_3
+    '+': blue_2
+  Layer:
+    default: dark_gray
+  Pads:
+    default: green_1
+    '+': green_2
