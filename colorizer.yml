@@ -2,6 +2,8 @@ default: white
 colors:
   white: ffffff
   yellow: ffee9f
+  yellow_1: dbc300
+  yellow_2: ffee9f
   orange: f66c03
   red: ff0505
   dark_gray: 3c3c3c
@@ -10,29 +12,43 @@ colors:
   blue_1: 8bc5ff
   blue_2: 10a4ee
   blue_3: 0303ff
-  purple_1: d86ce4
-  purple_2: ff39d4
+  purple_1: cdbbe4
+  purple_2: d86ce4
+  purple_3: ff39d4
   brown_1: '965735'
   brown_2: ffa374
+  brown_3: ffa374
+  fuschia_1: d2e498
+  fuschia_2: 7ac634
+  pink: ff94a6
 names:
   '#': white
+  '!': white
   Fill:
-    1: yellow
-    2: orange
-    4: red
-    8: purple_2
+    1: purple_1
+    2: purple_2
+    4: purple_3
+    8: red
+    drop: pink
+  Drum:
+    default: brown_1
+    '++': orange
+    '+': brown_2
   Perc:
     default: brown_1
-    B: brown_2
+    '+': brown_2
   Hits:
-    default: purple_1
-    B: purple_2
+    default: fuschia_1
+    '+': fuschia_2
   Synth:
     default: blue_1
-    B: blue_2
-    C: blue_3
+    '++': blue_3
+    '+': blue_2
   Layer:
-    default: dark_gray
+    default: yellow_1
+    '+': yellow_2
   Pad:
     default: green_1
-    B: green_2
+    '+': green_2
+  VJ:
+    default: dark_gray
